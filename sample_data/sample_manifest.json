@@ -1,0 +1,42 @@
+[
+  {
+    "id": "sample-passport-verified",
+    "title": "Synthetic Specimen Passport (Clean)",
+    "description": "Standard biometric passport specimen with valid dates, clear resolution, and matching facial portrait.",
+    "document_type": "Passport",
+    "document_path": "sample_data/sample_passport_clean.jpg",
+    "selfie_path": "sample_data/sample_selfie_match.jpg",
+    "expected_outcome": "VERIFIED (Risk: ~14/100)",
+    "details": "All fields present, valid expiry (2032), no tampering anomalies, matching portrait photo."
+  },
+  {
+    "id": "sample-id-expired",
+    "title": "Synthetic ID Card (Expired Date)",
+    "description": "National identity specimen containing a past validity date, triggering the expiry check penalty.",
+    "document_type": "ID Card",
+    "document_path": "sample_data/sample_id_card.jpg",
+    "selfie_path": "sample_data/sample_selfie_match.jpg",
+    "expected_outcome": "NEEDS REVIEW (Risk: ~48/100)",
+    "details": "Optical quality good, but document validity has expired, prompting human review recommendation."
+  },
+  {
+    "id": "sample-visa-tampered",
+    "title": "Synthetic Visa (Tamper Indicators)",
+    "description": "Visa specimen exhibiting localized high-density edge anomalies and abnormal quad variance.",
+    "document_type": "Visa",
+    "document_path": "sample_data/sample_passport_clean.jpg",
+    "selfie_path": "sample_data/sample_selfie_match.jpg",
+    "expected_outcome": "SUSPICIOUS (Risk: ~78/100)",
+    "details": "High edge gradient anomalies, noise discrepancies, triggering prototype tampering alert."
+  },
+  {
+    "id": "sample-face-mismatch",
+    "title": "Synthetic Passport (Face Mismatch Test)",
+    "description": "Valid passport paired with an unrelated applicant selfie to evaluate biometric correlation failure.",
+    "document_type": "Passport",
+    "document_path": "sample_data/sample_passport_clean.jpg",
+    "selfie_path": null,
+    "expected_outcome": "NEEDS REVIEW (Risk: ~38/100)",
+    "details": "Selfie missing or mismatched facial geometry causing biometric verification divergence."
+  }
+]

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-Based Fake Identity & Document Screening System</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Bar Contract -->
+  <header class="top-navbar">
+    <a href="/" class="brand-link">
+      <div class="brand-icon">ID</div>
+      <span>Document Screening System</span>
+    </a>
+    <nav class="nav-links">
+      <a href="/" class="active">Home</a>
+      <a href="/upload">Screen Document</a>
+      <a href="/dashboard">Admin Dashboard</a>
+      <a href="/history">Audit History</a>
+    </nav>
+    <a href="/upload" class="nav-cta">Start Screening</a>
+  </header>
+
+  <main class="container">
+    <!-- Hero Section -->
+    <div style="padding: 3rem 0; border-bottom: 1px solid var(--border-color); margin-bottom: 3rem;">
+      <div class="section-label">Problem Statement ID: 26188 · B.Tech CSE Minor Project</div>
+      <h1 class="hero-title">AI-Based Fake Identity & Document Screening System</h1>
+      <p class="hero-subtitle">
+        AI-assisted identity and document verification prototype providing first-level automated screening
+        across passports, national IDs, and visas with explainable multi-signal risk analysis.
+      </p>
+      <div style="display: flex; gap: 1rem; align-items: center;">
+        <a href="/upload" class="btn btn-primary" style="font-size: 1rem; padding: 0.85rem 2rem;">Start Screening</a>
+        <a href="/dashboard" class="btn btn-secondary">Open Admin Dashboard</a>
+      </div>
+    </div>
+
+    <!-- How It Works Grid -->
+    <div style="margin-bottom: 3.5rem;">
+      <div class="section-label">Pipeline Architecture</div>
+      <h2 style="font-size: 1.75rem; margin-bottom: 1.5rem;">Automated Verification Flow</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem;">
+        <div class="card">
+          <div style="color: var(--cyan-bright); font-size: 1.25rem; font-weight: bold; margin-bottom: 0.5rem;">01. Ingestion & Quality</div>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">
+            Validates image formats, resolution thresholds, Laplacian blur variance, and exposure balance to ensure forensic admissibility.
+          </p>
+        </div>
+        <div class="card">
+          <div style="color: var(--cyan-bright); font-size: 1.25rem; font-weight: bold; margin-bottom: 0.5rem;">02. OCR & Field Extraction</div>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">
+            Executes EasyOCR text recognition to extract document holder name, DOB, document number, nationality, and expiry validity.
+          </p>
+        </div>
+        <div class="card">
+          <div style="color: var(--cyan-bright); font-size: 1.25rem; font-weight: bold; margin-bottom: 0.5rem;">03. Tampering Analysis</div>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">
+            Heuristic OpenCV spatial edge density, local noise variance, and compression boundary anomaly inspection for splicing cues.
+          </p>
+        </div>
+        <div class="card">
+          <div style="color: var(--cyan-bright); font-size: 1.25rem; font-weight: bold; margin-bottom: 0.5rem;">04. Face & Risk Synthesis</div>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">
+            Correlates document portrait against applicant selfie and computes a normalized 0–100 risk score with explainable reasoning.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Key Features & Technology Grid -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 3.5rem;">
+      <div class="card">
+        <h3 class="card-title">Key Prototype Capabilities</h3>
+        <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.9rem; color: var(--text-muted);">
+          <li><span style="color: var(--cyan-bright);">✓</span> Multi-format support: Passports, Visas, and National ID Cards</li>
+          <li><span style="color: var(--cyan-bright);">✓</span> Optical quality inspection (sharpness, brightness, contrast)</li>
+          <li><span style="color: var(--cyan-bright);">✓</span> Expiry date detection against real-time clock</li>
+          <li><span style="color: var(--cyan-bright);">✓</span> Missing mandatory field checklist verification</li>
+          <li><span style="color: var(--cyan-bright);">✓</span> OpenCV edge gradient & noise inconsistency tampering flags</li>
+          <li><span style="color: var(--cyan-bright);">✓</span> Biometric face detection & similarity comparison</li>
+          <li><span style="color: var(--cyan-bright);">✓</span> Downloadable formal audit report via ReportLab</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title">Technology Stack</h3>
+        <table class="data-table">
+          <tbody>
+            <tr><td>Backend Engine</td><td class="mono">Python 3.10 + Flask</td></tr>
+            <tr><td>OCR Extraction</td><td class="mono">EasyOCR</td></tr>
+            <tr><td>Computer Vision</td><td class="mono">OpenCV (cv2) + NumPy</td></tr>
+            <tr><td>Database</td><td class="mono">SQLite (screening.db)</td></tr>
+            <tr><td>PDF Reporting</td><td class="mono">ReportLab Engine</td></tr>
+            <tr><td>Frontend UI</td><td class="mono">HTML5, CSS3, JavaScript, Chart.js</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Important Disclaimer -->
+    <div class="disclaimer-box">
+      <strong>IMPORTANT NOTICE &amp; DISCLAIMER:</strong>
+      This application is an academic prototype for first-level automated screening. Results, indicators, and risk scores
+      represent automated screening indications and do NOT constitute official proof of fraud or certified biometric authentication.
+      All flags require certified manual verification.
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>AI-Based Fake Identity &amp; Document Screening System · Problem Statement ID: 26188</p>
+    <p style="margin-top: 0.25rem; font-size: 0.8rem; color: #64748b;">B.Tech CSE Minor Project Prototype</p>
+  </footer>
+
+</body>
+</html>

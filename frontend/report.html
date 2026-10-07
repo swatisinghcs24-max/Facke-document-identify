@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Screening Report - Problem Statement 26188</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    @media print {
+      header.top-navbar, .no-print, footer.footer {
+        display: none !important;
+      }
+      body {
+        background: #fff !important;
+        color: #000 !important;
+      }
+      .card {
+        background: #fff !important;
+        border: 1px solid #ccc !important;
+        color: #000 !important;
+        box-shadow: none !important;
+      }
+      .data-table th, .data-table td {
+        border-color: #ddd !important;
+        color: #000 !important;
+      }
+      .mono {
+        color: #000 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar Contract -->
+  <header class="top-navbar no-print">
+    <a href="/" class="brand-link">
+      <div class="brand-icon">ID</div>
+      <span>Document Screening System</span>
+    </a>
+    <nav class="nav-links">
+      <a href="/">Home</a>
+      <a href="/upload">Screen Document</a>
+      <a href="/dashboard">Admin Dashboard</a>
+      <a href="/history">Audit History</a>
+    </nav>
+    <button onclick="window.print()" class="nav-cta">Print Report</button>
+  </header>
+
+  <main class="container" style="max-width: 850px;">
+    <!-- Printable Document Sheet -->
+    <div class="card" style="padding: 2.5rem; background: #0b1120; border: 1px solid rgba(56, 189, 248, 0.3);">
+      <div style="border-bottom: 2px solid var(--cyan-bright); padding-bottom: 1.25rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: flex-start;">
+        <div>
+          <h1 style="font-size: 1.6rem; color: #fff; margin-bottom: 0.25rem;">AI-Based Fake Identity & Document Screening Report</h1>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">
+            Problem Statement ID: 26188 · B.Tech CSE Minor Project Prototype
+          </p>
+        </div>
+        <div style="text-align: right;">
+          <div style="font-size: 0.75rem; color: var(--text-muted);">Screening ID</div>
+          <div class="mono" id="repId" style="font-weight: 700; color: var(--cyan-bright);">--</div>
+          <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;" id="repDate">--</div>
+        </div>
+      </div>
+
+      <!-- Summary Box -->
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; background: rgba(15, 23, 42, 0.6); padding: 1rem 1.25rem; border-radius: 6px; border: 1px solid var(--border-color); margin-bottom: 1.5rem;">
+        <div>
+          <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Final Status:</span>
+          <div id="repStatusBadge" style="margin-top: 0.25rem; font-weight: bold; font-size: 1.1rem; color: #34d399;">VERIFIED</div>
+        </div>
+        <div>
+          <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Risk Score:</span>
+          <div class="mono" id="repRiskScore" style="margin-top: 0.25rem; font-weight: bold; font-size: 1.1rem; color: #fff;">-- / 100</div>
+        </div>
+        <div>
+          <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Tamper Indicator:</span>
+          <div id="repTamper" style="margin-top: 0.25rem; font-weight: bold; font-size: 1.1rem; color: var(--cyan-bright);">LOW</div>
+        </div>
+      </div>
+
+      <!-- OCR Extracted Fields -->
+      <h3 style="font-size: 1.05rem; margin-bottom: 0.75rem; color: #fff;">1. Extracted Identity Information</h3>
+      <table class="data-table" style="margin-bottom: 1.5rem;">
+        <tbody>
+          <tr><td style="width: 200px;">Full Name</td><td class="mono" id="repName">--</td></tr>
+          <tr><td>Date of Birth (DOB)</td><td class="mono" id="repDob">--</td></tr>
+          <tr><td>Document Number</td><td class="mono" id="repDocNum">--</td></tr>
+          <tr><td>Nationality</td><td class="mono" id="repNationality">--</td></tr>
+          <tr><td>Expiry Date</td><td class="mono" id="repExpiry">--</td></tr>
+        </tbody>
+      </table>
+
+      <!-- Multi-signal Audit Checks -->
+      <h3 style="font-size: 1.05rem; margin-bottom: 0.75rem; color: #fff;">2. Multi-Signal Verification Checks</h3>
+      <table class="data-table" style="margin-bottom: 1.5rem;">
+        <tbody>
+          <tr><td style="width: 200px;">Document Optical Quality</td><td id="repDocQuality">--</td></tr>
+          <tr><td>Prototype Tampering Flag</td><td id="repTamperDetail">--</td></tr>
+          <tr><td>Biometric Face Verification</td><td id="repFaceSim">--</td></tr>
+          <tr><td>System Recommendation</td><td id="repRecommendation" style="font-weight: 600; color: #fff;">--</td></tr>
+        </tbody>
+      </table>
+
+      <!-- Reasoning Observations -->
+      <h3 style="font-size: 1.05rem; margin-bottom: 0.75rem; color: #fff;">3. Audit Observations</h3>
+      <ul id="repReasonsList" style="list-style: none; display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+        <!-- Populated via script -->
+      </ul>
+
+      <!-- Formal Disclaimer -->
+      <div class="disclaimer-box" style="margin-top: 1rem;">
+        <strong>NOTICE &amp; DISCLAIMER:</strong>
+        This report is generated by an automated academic screening prototype (Problem Statement 26188).
+        It provides first-level indications only and does not constitute certified proof of fraud or official identity validation.
+      </div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      loadDetailedReportView();
+    });
+  </script>
+</body>
+</html>

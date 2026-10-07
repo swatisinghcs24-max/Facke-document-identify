@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Document Screening System</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Chart.js from CDN for static HTML interface -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- Top Bar Contract -->
+  <header class="top-navbar">
+    <a href="/" class="brand-link">
+      <div class="brand-icon">ID</div>
+      <span>Document Screening System</span>
+    </a>
+    <nav class="nav-links">
+      <a href="/">Home</a>
+      <a href="/upload">Screen Document</a>
+      <a href="/dashboard" class="active">Admin Dashboard</a>
+      <a href="/history">Audit History</a>
+    </nav>
+    <a href="/upload" class="nav-cta">New Screening</a>
+  </header>
+
+  <main class="container">
+    <div style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-end;">
+      <div>
+        <div class="section-label">Screening Telemetry & Analytics</div>
+        <h1 style="font-size: 2rem;">Security Admin Dashboard</h1>
+      </div>
+      <div>
+        <a href="/upload" class="btn btn-primary">+ New Document Screening</a>
+      </div>
+    </div>
+
+    <!-- 4 High-Level Metric Tiles -->
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; margin-bottom: 2rem;">
+      <div class="card" style="padding: 1.25rem;">
+        <div style="color: var(--text-muted); font-size: 0.8rem; font-weight: 600; text-transform: uppercase;">Total Screenings</div>
+        <div class="mono" id="statTotal" style="font-size: 2.25rem; font-weight: 700; color: #fff; margin-top: 0.25rem;">--</div>
+      </div>
+      <div class="card" style="padding: 1.25rem; border-color: rgba(16, 185, 129, 0.3);">
+        <div style="color: #34d399; font-size: 0.8rem; font-weight: 600; text-transform: uppercase;">Verified (Low Risk)</div>
+        <div class="mono" id="statVerified" style="font-size: 2.25rem; font-weight: 700; color: #34d399; margin-top: 0.25rem;">--</div>
+      </div>
+      <div class="card" style="padding: 1.25rem; border-color: rgba(245, 158, 11, 0.3);">
+        <div style="color: #fbbf24; font-size: 0.8rem; font-weight: 600; text-transform: uppercase;">Needs Review</div>
+        <div class="mono" id="statReview" style="font-size: 2.25rem; font-weight: 700; color: #fbbf24; margin-top: 0.25rem;">--</div>
+      </div>
+      <div class="card" style="padding: 1.25rem; border-color: rgba(239, 68, 68, 0.3);">
+        <div style="color: #f87171; font-size: 0.8rem; font-weight: 600; text-transform: uppercase;">Suspicious (High Risk)</div>
+        <div class="mono" id="statSuspicious" style="font-size: 2.25rem; font-weight: 700; color: #f87171; margin-top: 0.25rem;">--</div>
+      </div>
+    </div>
+
+    <!-- Chart.js Visualizations Grid -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+      <div class="card">
+        <h3 class="card-title">Screening Status Distribution</h3>
+        <div style="height: 250px; position: relative;">
+          <canvas id="doughnutChart"></canvas>
+        </div>
+      </div>
+      <div class="card">
+        <h3 class="card-title">Classification Volume Breakdown</h3>
+        <div style="height: 250px; position: relative;">
+          <canvas id="barChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Screenings Table -->
+    <div class="card">
+      <div class="card-title">
+        <span>Recent Document Screenings</span>
+        <a href="/history" style="font-size: 0.85rem; color: var(--cyan-bright); text-decoration: none;">View All History →</a>
+      </div>
+      <div style="overflow-x: auto;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Screening ID</th>
+              <th>Date / Time</th>
+              <th>Document Type</th>
+              <th>Extracted Holder</th>
+              <th>Risk Score</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="recentScreeningsTbody">
+            <tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 2rem;">Loading screenings from database...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      loadDashboardAnalytics();
+    });
+  </script>
+</body>
+</html>

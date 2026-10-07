@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analyzing Document - Screening System</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Bar Contract -->
+  <header class="top-navbar">
+    <a href="/" class="brand-link">
+      <div class="brand-icon">ID</div>
+      <span>Document Screening System</span>
+    </a>
+    <nav class="nav-links">
+      <a href="/">Home</a>
+      <a href="/upload">Screen Document</a>
+      <a href="/dashboard">Admin Dashboard</a>
+      <a href="/history">Audit History</a>
+    </nav>
+  </header>
+
+  <main class="container" style="max-width: 700px; text-align: center; padding-top: 4rem;">
+    <div class="card" style="padding: 3rem 2rem;">
+      <div style="width: 64px; height: 64px; border-radius: 50%; border: 3px solid rgba(56, 189, 248, 0.2); border-top-color: var(--cyan-bright); animation: spin 1s linear infinite; margin: 0 auto 1.5rem;"></div>
+
+      <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Executing Automated Screening Pipeline</h2>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem;">
+        Applying multi-signal computer vision, EasyOCR, heuristic tamper detection, and risk scoring.
+      </p>
+
+      <!-- Step List -->
+      <div id="stepList" style="text-align: left; display: flex; flex-direction: column; gap: 0.75rem; background: rgba(9, 14, 23, 0.7); padding: 1.25rem 1.5rem; border-radius: 8px; border: 1px solid var(--border-color);">
+        <div id="step-1" style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem; color: var(--cyan-bright);">
+          <span>01. File Ingestion & Format Validation</span>
+          <span class="mono">COMPLETED</span>
+        </div>
+        <div id="step-2" style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted);">
+          <span>02. EasyOCR Text & Field Extraction</span>
+          <span class="mono">RUNNING...</span>
+        </div>
+        <div id="step-3" style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted);">
+          <span>03. Document Physical & Optical Quality Check</span>
+          <span class="mono">PENDING</span>
+        </div>
+        <div id="step-4" style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted);">
+          <span>04. Expiry Date & Missing Information Verification</span>
+          <span class="mono">PENDING</span>
+        </div>
+        <div id="step-5" style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted);">
+          <span>05. Prototype Tampering Indicator Analysis</span>
+          <span class="mono">PENDING</span>
+        </div>
+        <div id="step-6" style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted);">
+          <span>06. Biometric Facial Detection & Comparison</span>
+          <span class="mono">PENDING</span>
+        </div>
+        <div id="step-7" style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted);">
+          <span>07. Risk Engine Scoring & Recommendation</span>
+          <span class="mono">PENDING</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <style>
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+
+  <script>
+    // Animate the pipeline steps for clear user visibility before redirecting to result
+    const steps = [
+      { id: "step-2", text: "02. EasyOCR Text & Field Extraction" },
+      { id: "step-3", text: "03. Document Physical & Optical Quality Check" },
+      { id: "step-4", text: "04. Expiry Date & Missing Information Verification" },
+      { id: "step-5", text: "05. Prototype Tampering Indicator Analysis" },
+      { id: "step-6", text: "06. Biometric Facial Detection & Comparison" },
+      { id: "step-7", text: "07. Risk Engine Scoring & Recommendation" }
+    ];
+
+    let current = 0;
+    const interval = setInterval(() => {
+      if (current < steps.length) {
+        const item = document.getElementById(steps[current].id);
+        if (item) {
+          item.style.color = "var(--cyan-bright)";
+          item.querySelector(".mono").textContent = "COMPLETED";
+        }
+        current++;
+      } else {
+        clearInterval(interval);
+        setTimeout(() => {
+          window.location.href = "/result";
+        }, 400);
+      }
+    }, 350);
+  </script>
+</body>
+</html>

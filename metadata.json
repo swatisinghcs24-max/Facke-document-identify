@@ -1,0 +1,6 @@
+{
+  "name": "AI-Based Fake Identity & Document Screening System",
+  "description": "First-level screening prototype for identity documents (passports, visas, ID cards) featuring OCR extraction, document quality checks, tamper analysis, face verification, and risk engine scoring.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

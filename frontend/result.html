@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Screening Result - Document Screening System</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Bar Contract -->
+  <header class="top-navbar">
+    <a href="/" class="brand-link">
+      <div class="brand-icon">ID</div>
+      <span>Document Screening System</span>
+    </a>
+    <nav class="nav-links">
+      <a href="/">Home</a>
+      <a href="/upload">Screen Document</a>
+      <a href="/dashboard">Admin Dashboard</a>
+      <a href="/history">Audit History</a>
+    </nav>
+    <a href="/upload" class="nav-cta">New Screening</a>
+  </header>
+
+  <main class="container" style="max-width: 1000px;">
+    <!-- Result Header Banner -->
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem;">
+      <div>
+        <div class="section-label">Automated Screening Audit</div>
+        <h1 style="font-size: 2.25rem; margin-bottom: 0.25rem;">Screening Result</h1>
+        <p style="color: var(--text-muted); font-size: 0.85rem;" id="auditMetadata">Screening ID: Loading...</p>
+      </div>
+      <div style="display: flex; gap: 0.75rem;">
+        <button id="downloadPdfBtn" class="btn btn-primary" onclick="downloadReport()">Download Official PDF Report</button>
+        <a href="/upload" class="btn btn-secondary">Run Another Screening</a>
+      </div>
+    </div>
+
+    <!-- Executive Status & Risk Meter -->
+    <div class="card" style="padding: 2rem; border-color: rgba(56, 189, 248, 0.3);">
+      <div style="display: grid; grid-template-columns: auto 1fr auto; gap: 2.5rem; align-items: center;">
+        <!-- Dial -->
+        <div class="risk-circle" id="riskMeterCircle" style="width: 110px; height: 110px;">
+          <span class="score-val" id="riskScoreVal" style="font-size: 2rem;">--</span>
+          <span class="score-max">/ 100</span>
+        </div>
+
+        <!-- Classification & Recommendation -->
+        <div>
+          <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+            <span style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Status:</span>
+            <span class="badge" id="statusBadge" style="font-size: 0.95rem; padding: 0.35rem 1rem;">PROCESSING</span>
+          </div>
+          <div style="font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 0.4rem;" id="recommendationTitle">
+            Screening Complete
+          </div>
+          <p style="font-size: 0.9rem; color: var(--text-muted);" id="recommendationText">
+            Evaluating multi-signal risk indices...
+          </p>
+        </div>
+
+        <!-- Quick Indicators -->
+        <div style="text-align: right; border-left: 1px solid var(--border-color); padding-left: 2rem;">
+          <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.25rem;">Prototype Tamper Flag</div>
+          <div style="font-size: 1.15rem; font-weight: 700;" id="tamperIndicatorVal">LOW</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.75rem; margin-bottom: 0.25rem;">Face Similarity</div>
+          <div style="font-size: 1.15rem; font-weight: 700; color: var(--cyan-bright);" id="faceSimilarityVal">--%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Extracted Information & Verification Checklist -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+      <!-- Extracted Fields -->
+      <div class="card">
+        <h3 class="card-title">Extracted Document Information (OCR)</h3>
+        <table class="data-table">
+          <tbody>
+            <tr><td>Full Name</td><td class="mono" id="docName" style="color: #fff;">--</td></tr>
+            <tr><td>Date of Birth</td><td class="mono" id="docDob">--</td></tr>
+            <tr><td>Document Number</td><td class="mono" id="docNum" style="color: var(--cyan-bright);">--</td></tr>
+            <tr><td>Nationality</td><td class="mono" id="docNationality">--</td></tr>
+            <tr><td>Expiry Date</td><td class="mono" id="docExpiry">--</td></tr>
+            <tr><td>Expiry Status</td><td class="mono" id="docExpiryStatus">--</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Verification Checks Checklist -->
+      <div class="card">
+        <h3 class="card-title">Verification Checks</h3>
+        <div id="checksContainer" style="display: flex; flex-direction: column; gap: 0.65rem; font-size: 0.9rem;">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Detailed Analysis Reasons -->
+    <div class="card">
+      <h3 class="card-title">Explainable Screening Reasons & Audit Log</h3>
+      <ul id="reasonsList" style="list-style: none; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.9rem; color: var(--text-muted);">
+        <!-- Dynamically populated -->
+      </ul>
+    </div>
+
+    <!-- Mandatory Disclaimer -->
+    <div class="disclaimer-box">
+      <strong>SCREENING PROTOCOL NOTICE:</strong>
+      This result is an automated first-level screening indication and not official proof of fraud.
+      All machine learning heuristics and optical tampering indicators require physical inspection and manual verification by an authorized officer.
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      loadScreeningResultPage();
+    });
+  </script>
+</body>
+</html>

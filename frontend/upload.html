@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document Upload - Screening System</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Bar Contract -->
+  <header class="top-navbar">
+    <a href="/" class="brand-link">
+      <div class="brand-icon">ID</div>
+      <span>Document Screening System</span>
+    </a>
+    <nav class="nav-links">
+      <a href="/">Home</a>
+      <a href="/upload" class="active">Screen Document</a>
+      <a href="/dashboard">Admin Dashboard</a>
+      <a href="/history">Audit History</a>
+    </nav>
+    <a href="/upload" class="nav-cta">New Screening</a>
+  </header>
+
+  <main class="container" style="max-width: 900px;">
+    <div style="margin-bottom: 2rem;">
+      <div class="section-label">Screening Ingestion</div>
+      <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">Upload Document for Screening</h1>
+      <p style="color: var(--text-muted); font-size: 0.95rem;">
+        Provide document image and an optional selfie photo for multi-signal identity verification.
+      </p>
+    </div>
+
+    <!-- Quick Demo Preset Cards -->
+    <div class="card" style="background: rgba(2, 132, 199, 0.05); border-color: rgba(56, 189, 248, 0.25);">
+      <div class="card-title" style="font-size: 0.95rem; margin-bottom: 0.75rem;">
+        <span>Quick Test with Synthetic Samples (No upload needed)</span>
+      </div>
+      <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+        <button type="button" class="btn btn-outline" style="font-size: 0.8rem; padding: 0.45rem 0.85rem;" onclick="loadSamplePreset('passport-clean')">
+          Clean Passport (Valid)
+        </button>
+        <button type="button" class="btn btn-outline" style="font-size: 0.8rem; padding: 0.45rem 0.85rem;" onclick="loadSamplePreset('id-expired')">
+          ID Card (Expired)
+        </button>
+        <button type="button" class="btn btn-outline" style="font-size: 0.8rem; padding: 0.45rem 0.85rem;" onclick="loadSamplePreset('tamper-test')">
+          Document (Tamper Alert)
+        </button>
+        <button type="button" class="btn btn-outline" style="font-size: 0.8rem; padding: 0.45rem 0.85rem;" onclick="loadSamplePreset('mismatch-face')">
+          Mismatched Face
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Upload Form -->
+    <form id="screeningForm" class="card" style="padding: 2rem;">
+      <div class="form-group">
+        <label class="form-label" for="docType">Document Type</label>
+        <select id="docType" name="document_type" class="form-control">
+          <option value="Passport">Passport (Biometric Data Page)</option>
+          <option value="ID Card">National Identity Card / Smartcard</option>
+          <option value="Visa">Travel / Entry Visa</option>
+        </select>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+        <!-- Document Upload Box -->
+        <div>
+          <label class="form-label">Identity Document Image (Required)</label>
+          <div class="dropzone" id="docDropzone">
+            <input type="file" id="docInput" name="document" accept=".jpg,.jpeg,.png" style="display: none;" onchange="handleFileSelect(event, 'doc')">
+            <div id="docPlaceholder">
+              <div style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--cyan-bright);">📄</div>
+              <div style="font-weight: 600; font-size: 0.9rem;">Document Image</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; margin-bottom: 0.75rem;">JPG, JPEG, PNG (Max 10 MB)</div>
+              <div style="display: flex; gap: 0.5rem; justify-content: center;">
+                <button type="button" class="btn btn-secondary" style="font-size: 0.75rem; padding: 0.35rem 0.75rem;" onclick="document.getElementById('docInput').click()">
+                  Upload File
+                </button>
+                <button type="button" class="btn btn-outline" style="font-size: 0.75rem; padding: 0.35rem 0.75rem;" onclick="openCameraModal('doc')">
+                  📷 Take Photo
+                </button>
+              </div>
+            </div>
+            <div id="docPreviewBox" class="preview-container">
+              <img id="docPreviewImg" class="preview-img" alt="Document Preview">
+              <div style="margin-top: 0.5rem; display: flex; gap: 0.5rem; justify-content: center;">
+                <button type="button" class="btn btn-outline" style="padding: 0.3rem 0.75rem; font-size: 0.75rem;" onclick="openCameraModal('doc')">Retake Photo</button>
+                <button type="button" class="btn btn-secondary" style="padding: 0.3rem 0.75rem; font-size: 0.75rem;" onclick="removeFile(event, 'doc')">Remove</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Selfie Upload Box -->
+        <div>
+          <label class="form-label">Applicant Selfie (Optional for Face Match)</label>
+          <div class="dropzone" id="selfieDropzone">
+            <input type="file" id="selfieInput" name="selfie" accept=".jpg,.jpeg,.png" style="display: none;" onchange="handleFileSelect(event, 'selfie')">
+            <div id="selfiePlaceholder">
+              <div style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--cyan-bright);">👤</div>
+              <div style="font-weight: 600; font-size: 0.9rem;">Applicant Selfie Photo</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; margin-bottom: 0.75rem;">Front-facing facial portrait</div>
+              <div style="display: flex; gap: 0.5rem; justify-content: center;">
+                <button type="button" class="btn btn-secondary" style="font-size: 0.75rem; padding: 0.35rem 0.75rem;" onclick="document.getElementById('selfieInput').click()">
+                  Upload File
+                </button>
+                <button type="button" class="btn btn-outline" style="font-size: 0.75rem; padding: 0.35rem 0.75rem;" onclick="openCameraModal('selfie')">
+                  📷 Take Selfie
+                </button>
+              </div>
+            </div>
+            <div id="selfiePreviewBox" class="preview-container">
+              <img id="selfiePreviewImg" class="preview-img" alt="Selfie Preview">
+              <div style="margin-top: 0.5rem; display: flex; gap: 0.5rem; justify-content: center;">
+                <button type="button" class="btn btn-outline" style="padding: 0.3rem 0.75rem; font-size: 0.75rem;" onclick="openCameraModal('selfie')">Retake Selfie</button>
+                <button type="button" class="btn btn-secondary" style="padding: 0.3rem 0.75rem; font-size: 0.75rem;" onclick="removeFile(event, 'selfie')">Remove</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MediaDevices Camera Modal -->
+      <div id="cameraModal" class="camera-modal-backdrop" style="display: none;">
+        <div class="camera-modal-content">
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 1.25rem; background: #0b1120; border-bottom: 1px solid rgba(56, 189, 248, 0.2);">
+            <div style="font-weight: 700; font-size: 0.9rem;" id="cameraModalTitle">Take Photo</div>
+            <button type="button" onclick="closeCameraModal()" style="background: transparent; border: none; color: #94a3b8; font-size: 1.25rem; cursor: pointer;">✕</button>
+          </div>
+
+          <div class="camera-viewport">
+            <video id="cameraVideo" class="camera-video" autoplay playsinline muted></video>
+            <div id="cameraGuideDoc" class="camera-guide-doc" style="display: none;"></div>
+            <div id="cameraGuideSelfie" class="camera-guide-selfie" style="display: none;"></div>
+            <img id="cameraCapturedPreview" style="display: none; width: 100%; height: 100%; object-fit: contain;">
+            <div id="cameraErrorBanner" style="display: none; position: absolute; color: #f87171; padding: 1rem; text-align: center; font-size: 0.85rem;"></div>
+          </div>
+
+          <div style="padding: 1rem; background: #0b1120; border-top: 1px solid rgba(56, 189, 248, 0.2); display: flex; justify-content: space-between; align-items: center;">
+            <div id="cameraLiveControls" style="display: flex; width: 100%; justify-content: space-between; align-items: center;">
+              <button type="button" class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;" onclick="flipCameraFacing()">
+                Flip Camera
+              </button>
+              <button type="button" class="btn btn-primary" style="font-size: 0.9rem; padding: 0.5rem 1.5rem; border-radius: 50px;" onclick="snapCameraPhoto()">
+                ● Capture Photo
+              </button>
+              <button type="button" class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;" onclick="closeCameraModal()">
+                Cancel
+              </button>
+            </div>
+            <div id="cameraConfirmControls" style="display: none; width: 100%; justify-content: space-between; align-items: center;">
+              <button type="button" class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;" onclick="retakeCameraPhoto()">
+                ↺ Retake
+              </button>
+              <button type="button" class="btn btn-primary" style="font-size: 0.85rem; padding: 0.4rem 1.2rem; background: #10b981;" onclick="confirmCameraPhoto()">
+                ✓ Use This Photo
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Error banner -->
+      <div id="uploadError" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; padding: 0.75rem 1rem; border-radius: 6px; font-size: 0.85rem; margin-bottom: 1.5rem;"></div>
+
+      <div style="display: flex; justify-content: flex-end;">
+        <button type="submit" id="submitBtn" class="btn btn-primary" style="padding: 0.85rem 2.5rem; font-size: 0.95rem;">
+          Start Screening Analysis
+        </button>
+      </div>
+    </form>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Screening Audit History - Document Screening System</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Bar Contract -->
+  <header class="top-navbar">
+    <a href="/" class="brand-link">
+      <div class="brand-icon">ID</div>
+      <span>Document Screening System</span>
+    </a>
+    <nav class="nav-links">
+      <a href="/">Home</a>
+      <a href="/upload">Screen Document</a>
+      <a href="/dashboard">Admin Dashboard</a>
+      <a href="/history" class="active">Audit History</a>
+    </nav>
+    <a href="/upload" class="nav-cta">New Screening</a>
+  </header>
+
+  <main class="container">
+    <div style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-end;">
+      <div>
+        <div class="section-label">Database Audit Log</div>
+        <h1 style="font-size: 2rem;">Screening History</h1>
+      </div>
+      <div>
+        <a href="/upload" class="btn btn-primary">+ Run Screening</a>
+      </div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="card" style="padding: 1.25rem; display: flex; gap: 1rem; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+      <div style="display: flex; gap: 1rem; flex: 1; max-width: 500px;">
+        <input type="text" id="searchInput" class="form-control" placeholder="Search by Screening ID, Holder Name, or Doc Number..." onkeyup="filterHistory()">
+      </div>
+      <div style="display: flex; gap: 0.5rem; align-items: center;">
+        <label style="font-size: 0.85rem; color: var(--text-muted);">Status Filter:</label>
+        <select id="statusFilter" class="form-control" style="width: auto; padding: 0.5rem 1rem;" onchange="filterHistory()">
+          <option value="ALL">All Statuses</option>
+          <option value="VERIFIED">Verified</option>
+          <option value="NEEDS REVIEW">Needs Review</option>
+          <option value="SUSPICIOUS">Suspicious</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- History Table -->
+    <div class="card">
+      <div style="overflow-x: auto;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Screening ID</th>
+              <th>Timestamp</th>
+              <th>Document Type</th>
+              <th>Holder Name</th>
+              <th>Doc Number</th>
+              <th>Risk Score</th>
+              <th>Status</th>
+              <th>Audit Report</th>
+            </tr>
+          </thead>
+          <tbody id="historyTbody">
+            <tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 2rem;">Loading audit records from SQLite database...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      loadHistoryTable();
+    });
+  </script>
+</body>
+</html>
